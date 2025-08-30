@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kun Studio - insiders | TonyProg </title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+</head>
+<body>
+    <div class="editor-container">
+        <!-- Header -->
+        <header class="editor-header">
+            <div class="logo">
+                <h1>Kun Studio Insiders | TonyProg </h1>
+            </div>
+            <div class="controls">
+                <select id="language-selector" class="language-selector">
+                    <option value="javascript">JavaScript</option>
+                    <option value="typescript">TypeScript</option>
+                    <option value="html">HTML</option>
+                    <option value="css">CSS</option>
+                    <option value="python">Python</option>
+                    <option value="coffeescript">CoffeeScript</option>
+                    <option value="actionscript">ActionScript</option>
+                    <option value="asharp">A#</option>
+                    <option value="csharp">C#</option>
+                    <option value="aspnet">ASP.NET</option>
+                    <option value="zig">Zig</option>
+                    <option value="haskell">Haskell</option>
+                    <option value="fsharp">F#</option>
+                    <option value="qsharp">Q#</option>
+                    <option value="java">Java</option>
+                    <option value="cpp">C++</option>
+                    <option value="ruby">Ruby</option>
+                    <option value="php">PHP</option>
+                    <option value="go">Go</option>
+                    <option value="rust">Rust</option>
+                    <option value="swift">Swift</option>
+                    <option value="kotlin">Kotlin</option>
+                    <option value="sql">SQL</option>
+                    <option value="yaml">YAML</option>
+                    <option value="markdown">Markdown</option>
+                    <option value="shell">Shell</option>
+                </select>
+                <button id="run-btn" class="run-btn">▶ Run Code</button>
+                <button id="save-btn" class="save-btn">💾 Save</button>
+                <a href="https://github.com/ritwickdey/vscode-live-server" target="_blank"><button id="live-server-btn" class="extension-btn">🌐 Live Server open source</button></a>
+                <a href="https://github.com/microsoft/vscode-livepreview" target="_blank"><button id="live-preview-btn" class="extension-btn">👁️ Live Preview open source</button></a>
+                <a href="https://github.com/microsoft/vscode-copilot-chat" target="_blank"><button id="copilot-btn" class="extension-btn">🤖 GitHub Copilot open source</button></a>
+                <a href="https://github.com/microsoft/vscode" target="_blank"><button id="vscode-btn" class="extension-btn">🛠️ VSCode open source</button></a>
+                <select id="theme-selector-dropdown" class="theme-selector-dropdown">
+                    <option value="default">🌙 Default Dark</option>
+                    <option value="light">☀️ Light</option>
+                    <option value="cursor-dark">🖤 Cursor Dark</option>
+                    <option value="light-cursor">⚪ Light Cursor</option>
+                    <option value="cyberpunk">🤖 Cyberpunk</option>
+                    <option value="neon">💖 Neon</option>
+                    <option value="ocean">🌊 Ocean</option>
+                </select>
+            </div>
+        </header>
+
+        <!-- Main Editor Area -->
+        <main class="editor-main">
+            <!-- Code Editor Panel -->
+            <div class="editor-panel">
+                <div class="panel-header">
+                    <h3>Code Editor</h3>
+                    <div class="file-tabs">
+                        <button class="tab-btn active" data-file="main">main.js</button>
+                        <button class="tab-btn" data-file="typescript">main.ts</button>
+                        <button class="tab-btn" data-file="html">index.html</button>
+                        <button class="tab-btn" data-file="css">styles.css</button>
+                        <button class="tab-btn" data-file="python">main.py</button>
+                        <button class="tab-btn" data-file="coffeescript">main.coffee</button>
+                        <button class="tab-btn" data-file="actionscript">Main.as</button>
+                        <button class="tab-btn" data-file="asharp">main.a</button>
+                        <button class="tab-btn" data-file="csharp">Program.cs</button>
+                        <button class="tab-btn" data-file="aspnet">Program.cs</button>
+                        <button class="tab-btn" data-file="zig">main.zig</button>
+                        <button class="tab-btn" data-file="haskell">Main.hs</button>
+                        <button class="tab-btn" data-file="fsharp">Program.fs</button>
+                        <button class="tab-btn" data-file="qsharp">Program.qs</button>
+                        <button class="tab-btn" data-file="ruby">main.rb</button>
+                        <button class="tab-btn" data-file="php">index.php</button>
+                        <button class="tab-btn" data-file="go">main.go</button>
+                        <button class="tab-btn" data-file="rust">main.rs</button>
+                        <button class="tab-btn" data-file="swift">main.swift</button>
+                        <button class="tab-btn" data-file="kotlin">Main.kt</button>
+                        <button class="tab-btn" data-file="sql">queries.sql</button>
+                        <button class="tab-btn" data-file="yaml">config.yaml</button>
+                        <button class="tab-btn" data-file="markdown">README.md</button>
+                        <button class="tab-btn" data-file="shell">script.sh</button>
+                    </div>
+                </div>
+                <div class="code-editor">
+                    <textarea id="code-editor"></textarea>
+                </div>
+            </div>
+
+            <!-- Output Panel -->
+            <div class="output-panel">
+                <div class="panel-header">
+                    <h3>Output</h3>
+                    <div class="output-controls">
+                        <button id="clear-output" class="clear-btn">Clear</button>
+                        <button id="fullscreen-output" class="fullscreen-btn">⛶</button>
+                    </div>
+                </div>
+                <div class="output-content">
+                    <div id="live-preview-panel" class="live-preview-panel" style="display: none;">
+                        <div class="preview-header">
+                            <h4>Live Preview</h4>
+                            <button id="close-preview" class="close-btn">✕</button>
+                        </div>
+                        <iframe id="preview-frame" class="preview-frame"></iframe>
+                    </div>
+                    <div id="output-display" class="output-display"></div>
+                    <div id="console-output" class="console-output"></div>
+                    <div id="cmd-terminal" class="cmd-terminal">
+                        <div class="cmd-header">
+                            <span class="cmd-title">💻 Terminal</span>
+                            <div class="cmd-controls">
+                                <button id="cmd-clear" class="cmd-clear-btn">Clear</button>
+                                <button id="cmd-toggle" class="cmd-toggle-btn">⛶</button>
+                            </div>
+                        </div>
+                        <div class="cmd-output" id="cmd-output"></div>
+                        <div class="cmd-input-line">
+                            <span class="cmd-prompt">$</span>
+                            <input type="text" id="cmd-input" class="cmd-input" placeholder="Type a command... (type 'help' for commands list)" />
+                        </div>
+                    </div>
+                    
+                    <div id="copilot-panel" class="copilot-panel" style="display: none;">
+                        <div class="copilot-header">
+                            <span class="copilot-title">🤖 GitHub Copilot</span>
+                            <div class="copilot-controls">
+                                <button id="copilot-clear" class="copilot-clear-btn">Clear</button>
+                                <button id="copilot-toggle" class="copilot-toggle-btn">⛶</button>
+                            </div>
+                        </div>
+                        <div class="copilot-output" id="copilot-output"></div>
+                        <div class="copilot-input-line">
+                            <span class="copilot-prompt">🤖</span>
+                            <input type="text" id="copilot-input" class="copilot-input" placeholder="Ask Copilot for help..." />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="editor-footer">
+            <div class="status-bar">
+                <span id="cursor-position">Line 1, Column 1</span>
+                <span id="file-size">0 characters</span>
+                <span id="encoding">UTF-8</span>
+                <a href="https://https://marketplace.visualstudio.com" target="_blank"><button style="    padding: 4px 8px;
+                    border-radius: 4px;
+                    background: #3498db;
+                    color: white;
+                    font-size: 12px;
+                    font-weight: 500;">Go live</button></a>
+                <span id="auto-save-status" class="auto-save-status">💾 Auto-save: Enabled</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    
+    <!-- Core Language Modes -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/typescript/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/coffeescript/coffeescript.min.js"></script>
+    
+    <!-- C-like Languages (C#, C++, Java) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/clike/clike.min.js"></script>
+    
+    <!-- Functional Languages (F#, A#, Haskell) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/mllike/mllike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/haskell/haskell.min.js"></script>
+    
+    <!-- ActionScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/actionscript/actionscript.min.js"></script>
+    
+    <!-- Additional Syntax Support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/shell/shell.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/sql/sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/yaml/yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/markdown/markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/ruby/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/php/php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/go/go.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/rust/rust.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/swift/swift.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/kotlin/kotlin.min.js"></script>
+    <a href="ai_interface.html">AI Interface</a>
+    <a href="ai_server.py"></a>
+    <a href="coding_ai.py"></a>
+    <script src="script.js"></script>
+</body>
+</html>
