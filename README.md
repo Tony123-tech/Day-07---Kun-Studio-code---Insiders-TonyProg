@@ -276,4 +276,4 @@ If you encounter any issues or have questions:
 
 **Happy Coding! 🎉**
 
-Built with ❤️ using HTML, CSS, and JavaScript
+Built with ❤️ using HTML, CSS, python and JavaScript
